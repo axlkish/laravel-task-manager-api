@@ -62,3 +62,30 @@ Clear Laravel caches:
 Run tests:
 
 `docker compose exec app php artisan test`
+
+### Demo Credentials
+
+Email: admin@example.com  
+Password: password
+
+### API
+
+Base URL
+
+http://localhost:8000/api/v1
+
+#### Tasks
+
+`GET /tasks`
+
+`GET /tasks/{id}`
+
+`POST /tasks`
+
+`PATCH /tasks/{id}`
+
+`DELETE /tasks/{id}`
+
+#### Full API documentation available at:
+
+/api/docs

@@ -1,5 +1,7 @@
 FROM php:8.3-fpm
 
+ENV HISTFILE=/dev/null
+
 WORKDIR /var/www
 
 RUN apt-get update && apt-get install -y \
@@ -37,6 +39,8 @@ RUN pecl install redis \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Permissions
+RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
+
 RUN chown -R www-data:www-data /var/www
 
 USER www-data
