@@ -24,6 +24,7 @@ The goal of this repository is to showcase best practices for building scalable 
 - Docker development environment
 - PostgreSQL database
 - Redis caching and queues
+- Sending notification emails
 - Full-text search with Meilisearch
 - Clean Laravel backend architecture
 

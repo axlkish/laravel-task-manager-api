@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Models\User;
 use App\Models\Project;
 use App\Enums\TaskStatus;
+use App\Jobs\SendTaskCreatedEmailJob;
 
 class TaskService
 {
@@ -25,6 +26,7 @@ class TaskService
         $task->priority = $data['priority'];
         $task->due_date = $data['due_date'] ?? null;
         $task->save();
+        SendTaskCreatedEmailJob::dispatch($task);
         return $task;
     }
 
