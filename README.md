@@ -27,12 +27,13 @@ The goal of this repository is to showcase best practices for building scalable 
 - Sending notification emails
 - Full-text search with Meilisearch
 - Clean Laravel backend architecture
+- Tests
 
 ### Running the Project
 
 Start the development environment:
 
-`docker compose up -d`
+`docker compose up -d --build`
 
 Install dependencies:
 
@@ -42,23 +43,19 @@ Run migrations:
 
 `docker compose exec app php artisan migrate`
 
-### API Endpoint Example
-
-Health check endpoint:
-
-`GET /api/v1/health`
-
-Response:
-
-`{
-"status": "ok"
-}`
-
 ### Development
 
 Clear Laravel caches:
 
 `docker compose exec app php artisan optimize:clear`
+
+Run queue worker (mail send)
+
+`docker compose exec app php artisan queue:work`
+
+Refresh Database:
+
+`docker compose exec app php artisan migrate:fresh --seed`
 
 Run tests:
 
@@ -75,18 +72,6 @@ Base URL
 
 http://localhost:8000/api/v1
 
-#### Tasks
-
-`GET /tasks`
-
-`GET /tasks/{id}`
-
-`POST /tasks`
-
-`PATCH /tasks/{id}`
-
-`DELETE /tasks/{id}`
-
 #### Full API documentation available at:
 
-/api/docs
+http://localhost:8000/api/docs

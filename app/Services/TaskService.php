@@ -40,4 +40,11 @@ class TaskService
     {
         $task->delete();
     }
+
+    public function changeStatus(Task $task, TaskStatus $status): Task
+    {
+        $task->status = $status->value;
+        $task->save();
+        return $task;
+    }
 }

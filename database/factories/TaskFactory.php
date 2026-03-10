@@ -2,28 +2,32 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
+use App\Models\Task;
 use App\Models\Project;
 use App\Enums\TaskStatus;
 use App\Enums\TaskPriority;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Task>
- */
 class TaskFactory extends Factory
 {
-    /**
-     * @return array<string, mixed>
-     */
+    protected $model = Task::class;
+
     public function definition(): array
     {
+        $project = Project::factory()->create([
+            'owner_id' => '1'
+        ]);
+
         return [
-            'title' => fake()->sentence(),
-            'description' => fake()->paragraph(),
-            'status' => fake()->randomElement(TaskStatus::cases()),
-            'priority' => fake()->randomElement(TaskPriority::cases()),
-            'due_date' => fake()->dateTimeBetween('now', '+30 days'),
+            'project_id' => $project->id,
+            'creator_id' => '1',
+            'assignee_id' => User::factory()->create()->id,
+            'title' => $this->faker->sentence(),
+            'description' => $this->faker->paragraph(),
+            'status' => $this->faker->randomElement(TaskStatus::cases())->value,
+            'priority' => $this->faker->randomElement(TaskPriority::cases())->value,
+            'due_date' => $this->faker->dateTimeBetween('+1 day', '+1 month'),
         ];
     }
 }
