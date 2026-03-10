@@ -29,16 +29,30 @@ class TaskController extends Controller
     {
         $perPage = min($request->integer('per_page', 15), 100);
         $cacheKey = 'tasks:' . md5($request->fullUrl());
-        $tasks = Cache::remember($cacheKey, env('CACHE_TASKS_TTL', 60), function () use ($request, $perPage) {
-            $filters = new TaskFilters($request);
 
-            return $filters
-                ->apply(
-                    Task::query()->with(['project', 'creator', 'assignee'])
-                )
-                ->paginate($perPage);
+        $tasks = Cache::remember(
+            $cacheKey,
+            env('CACHE_TASKS_TTL', 60),
+            function () use ($request, $perPage) {
+                // full-text search
+                if ($request->filled('search')) {
+                    return Task::search($request->search)
+                        ->query(fn ($query) => (new TaskFilters($request))
+                            ->apply($query->with(['project', 'creator', 'assignee']))
+                        )
+                        ->paginate($perPage);
+                }
 
-        });
+                // basic
+                $filters = new TaskFilters($request);
+
+                return $filters
+                    ->apply(
+                        Task::query()->with(['project', 'creator', 'assignee'])
+                    )
+                    ->paginate($perPage);
+            }
+        );
 
         return TaskResource::collection($tasks);
     }

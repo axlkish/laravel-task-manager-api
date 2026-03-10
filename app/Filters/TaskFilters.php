@@ -18,7 +18,6 @@ readonly class TaskFilters
         $this->status($query);
         $this->priority($query);
         $this->assignee($query);
-        $this->search($query);
         $this->sort($query);
         return $query;
     }
@@ -41,13 +40,6 @@ readonly class TaskFilters
     {
         if ($this->request->filled('assignee_id')) {
             $query->where('assignee_id', $this->request->assignee_id);
-        }
-    }
-
-    private function search(Builder $query): void
-    {
-        if ($this->request->filled('search')) {
-            $query->where('title', 'like', '%' . $this->request->search . '%');
         }
     }
 
