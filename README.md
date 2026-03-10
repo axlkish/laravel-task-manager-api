@@ -68,10 +68,16 @@ Password: password
 
 ### API
 
-Base URL
+Local Base URL
 
 http://localhost:8000/api/v1
 
 #### Full API documentation available at:
+
+Github URL
+
+https://axlkish.github.io/laravel-task-manager-api/
+
+Localhost URL
 
 http://localhost:8000/api/docs
